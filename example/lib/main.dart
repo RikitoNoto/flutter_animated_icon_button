@@ -1,63 +1,128 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
-import 'package:flutter_animated_icon_button/flutter_animated_icon_button.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class FadeIconApp extends StatelessWidget {
+  const FadeIconApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _flutterAnimatedIconButtonPlugin = FlutterAnimatedIconButton();
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: IconAnimation(),
+    );
   }
+}
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _flutterAnimatedIconButtonPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+class IconAnimation extends StatefulWidget {
+  const IconAnimation({super.key});
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
+  @override
+  _IconAnimationState createState() => _IconAnimationState();
+}
 
+class _IconAnimationState extends State<IconAnimation> {
+  bool _showFirstIcon = true;
+
+  void _toggleIcon() {
     setState(() {
-      _platformVersion = platformVersion;
+      _showFirstIcon = !_showFirstIcon;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Icon Animation')),
+      body: Center(
+        child: GestureDetector(
+          onTap: _toggleIcon,
+          child: AnimatedSwitcher(
+            duration: const Duration(seconds: 1),
+            child: _showFirstIcon
+                ? const Icon(Icons.star, key: ValueKey<int>(1))
+                : const Icon(Icons.favorite, key: ValueKey<int>(2)),
+            transitionBuilder: (child, animation) {
+              return ScaleTransition(
+                scale: animation,
+                child: RotationTransition(
+                  turns: animation,
+                  child: child,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
+  }
+}
+
+class AnimatedBulbApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AnimatedBulb(),
+    );
+  }
+}
+
+class AnimatedBulb extends StatefulWidget {
+  @override
+  _AnimatedBulbState createState() => _AnimatedBulbState();
+}
+
+class _AnimatedBulbState extends State<AnimatedBulb>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _controller.repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Animated Bulb')),
+      body: Center(
+        child: CustomPaint(
+          size: Size(200, 200),
+          painter: BulbPainter(_controller),
+        ),
+      ),
+    );
+  }
+}
+
+class BulbPainter extends CustomPainter {
+  Animation<double> animation;
+
+  BulbPainter(this.animation) : super(repaint: animation);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = Colors.red
+      ..strokeWidth = 5;
+
+    double startY = size.height * (1 - animation.value);
+    double endY = size.height;
+
+    Offset start = Offset(size.width / 2, startY);
+    Offset end = Offset(size.width / 2, endY);
+
+    canvas.drawLine(start, end, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }
