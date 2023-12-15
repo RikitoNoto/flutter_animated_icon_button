@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_icon_button/tap_fill_icon.dart';
 
 void main() {
   runApp(TapIconApp());
@@ -10,7 +11,11 @@ class TapIconApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: TapIconAnimation(),
+      home: TapFillIcon(
+        borderIcon: Icons.favorite_border,
+        fillIcon: Icons.favorite,
+        initialPushed: true,
+      ),
     );
   }
 }
