@@ -65,39 +65,36 @@ class TapFillIconState extends State<TapFillIcon>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Icon Animation')),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            widget.onTap?.call();
-            if (_isPushed) {
-              widget.onPull?.call();
-              _controller.value = _controller.lowerBound;
-            } else {
-              widget.onPush?.call();
-              _controller.forward();
-            }
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          widget.onTap?.call();
+          if (_isPushed) {
+            widget.onPull?.call();
+            _controller.value = _controller.lowerBound;
+          } else {
+            widget.onPush?.call();
+            _controller.forward();
+          }
 
-            _isPushed = !_isPushed;
-          },
-          child: Stack(
-            children: [
-              Icon(
-                widget.borderIcon,
-                color: widget.borderColor,
-              ),
-              Transform.scale(
-                scale: CurvedAnimation(
-                        parent: _controller, curve: widget.animationCurve)
-                    .drive(Tween(
-                        begin: _controller.lowerBound,
-                        end: _controller.upperBound))
-                    .value,
-                child: Icon(widget.fillIcon, color: widget.fillColor),
-              ),
-            ],
-          ),
+          _isPushed = !_isPushed;
+        },
+        child: Stack(
+          children: [
+            Icon(
+              widget.borderIcon,
+              color: widget.borderColor,
+            ),
+            Transform.scale(
+              scale: CurvedAnimation(
+                      parent: _controller, curve: widget.animationCurve)
+                  .drive(Tween(
+                      begin: _controller.lowerBound,
+                      end: _controller.upperBound))
+                  .value,
+              child: Icon(widget.fillIcon, color: widget.fillColor),
+            ),
+          ],
         ),
       ),
     );

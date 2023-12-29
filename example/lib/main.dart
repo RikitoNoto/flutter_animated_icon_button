@@ -1,22 +1,76 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_icon_button/animate_change_icon.dart';
 import 'package:flutter_animated_icon_button/tap_fill_icon.dart';
 
 void main() {
-  runApp(TapIconApp());
+  runApp(const IconApp());
 }
 
-class TapIconApp extends StatelessWidget {
-  const TapIconApp({super.key});
+class IconApp extends StatelessWidget {
+  const IconApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TapFillIcon(
-        borderIcon: Icons.favorite_border,
-        fillIcon: Icons.favorite,
-        initialPushed: true,
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Icon animations'),
       ),
-    );
+      body: const Column(
+        children: [
+          TapFillIcon(
+            borderIcon: Icons.favorite_border,
+            fillIcon: Icons.favorite,
+            initialPushed: false,
+          ),
+          AnimateChangeIcon(
+            rotateBeginAngle: 0,
+            firstIcon: Icon(
+              Icons.play_arrow_rounded,
+              size: 50,
+            ),
+            secondIcon: Icon(
+              Icons.stop_rounded,
+              size: 50,
+            ),
+          ),
+          IconAnimation(),
+        ],
+      ),
+    ));
+  }
+}
+
+class TapIconApp extends StatefulWidget {
+  const TapIconApp({super.key});
+
+  @override
+  TapIconAppState createState() => TapIconAppState();
+}
+
+class TapIconAppState extends State<TapIconApp>
+    with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Icon Animation'),
+      ),
+      body: const Column(
+        children: [
+          TapFillIcon(
+            borderIcon: Icons.favorite_border,
+            fillIcon: Icons.favorite,
+            initialPushed: false,
+          ),
+        ],
+      ),
+    ));
   }
 }
 
@@ -82,51 +136,34 @@ class _TapIconAnimationState extends State<TapIconAnimation>
       appBar: AppBar(title: const Text('Icon Animation')),
       body: Center(
         child: GestureDetector(
-            onTap: _toggleIcon,
-            child: Stack(
-              children: [
-                Icon(
-                  Icons.favorite_border,
-                  color: Colors.grey,
-                ),
-                Transform.scale(
-                  scale: CurvedAnimation(
-                          parent: _controller, curve: Curves.easeOutBack)
-                      .drive(Tween<double>(begin: 0, end: 1))
-                      .value,
-                  child: Icon(Icons.favorite, color: Colors.red),
-                ),
-                CustomPaint(
-                  size: Size(200, 200),
-                  painter: TapParticlePainter(
-                      sizeAnimation: CurvedAnimation(
-                              parent: _controller,
-                              curve: NormalDistributionCurve())
-                          .drive<double>(Tween<double>(begin: 0, end: 1)),
-                      positionAnimation: CurvedAnimation(
-                              parent: _controller, curve: Curves.easeOutBack)
-                          .drive(Tween<double>(begin: 0, end: 1))),
-                ),
-              ],
-            )
-            // AnimatedContainer(
-            //   duration: const Duration(seconds: 1),
-            //   child: _showFirstIcon
-            //       // ? const Icon(Icons.star, key: ValueKey<int>(1))
-            //       // : const Icon(Icons.favorite, key: ValueKey<int>(2)),
-            //       ? Icon(Icons.favorite, size: 100.0, color: Colors.red)
-            //       : Icon(Icons.favorite, size: 50.0, color: Colors.red),
-            //   // transitionBuilder: (child, animation) {
-            //   //   return ScaleTransition(
-            //   //     scale: animation,
-            //   //     child: RotationTransition(
-            //   //       turns: animation,
-            //   //       child: child,
-            //   //     ),
-            //   //   );
-            //   // },
-            // ),
-            ),
+          onTap: _toggleIcon,
+          child: Stack(
+            children: [
+              Icon(
+                Icons.favorite_border,
+                color: Colors.grey,
+              ),
+              Transform.scale(
+                scale: CurvedAnimation(
+                        parent: _controller, curve: Curves.easeOutBack)
+                    .drive(Tween<double>(begin: 0, end: 1))
+                    .value,
+                child: Icon(Icons.favorite, color: Colors.red),
+              ),
+              CustomPaint(
+                size: Size(200, 200),
+                painter: TapParticlePainter(
+                    sizeAnimation: CurvedAnimation(
+                            parent: _controller,
+                            curve: NormalDistributionCurve())
+                        .drive<double>(Tween<double>(begin: 0, end: 1)),
+                    positionAnimation: CurvedAnimation(
+                            parent: _controller, curve: Curves.easeOutBack)
+                        .drive(Tween<double>(begin: 0, end: 1))),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -190,29 +227,50 @@ class _IconAnimationState extends State<IconAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Icon Animation')),
-      body: Center(
-        child: GestureDetector(
-          onTap: _toggleIcon,
-          child: AnimatedSwitcher(
-            duration: const Duration(seconds: 1),
-            child: _showFirstIcon
-                ? const Icon(Icons.star, key: ValueKey<int>(1))
-                : const Icon(Icons.favorite, key: ValueKey<int>(2)),
-            transitionBuilder: (child, animation) {
-              return ScaleTransition(
-                scale: animation,
-                child: RotationTransition(
-                  turns: animation,
-                  child: child,
-                ),
-              );
-            },
-          ),
-        ),
+    return GestureDetector(
+      onTap: _toggleIcon,
+      child: AnimatedSwitcher(
+        duration: const Duration(seconds: 1),
+        child: _showFirstIcon
+            ? const Icon(
+                Icons.star,
+                key: ValueKey<int>(1),
+              )
+            : const Icon(Icons.favorite, key: ValueKey<int>(2)),
+        transitionBuilder: (child, animation) {
+          return ScaleTransition(
+            scale: animation,
+            child: RotationTransition(
+              turns: animation,
+              child: child,
+            ),
+          );
+        },
       ),
     );
+    // return Scaffold(
+    //   appBar: AppBar(title: const Text('Icon Animation')),
+    //   body: Center(
+    //     child: GestureDetector(
+    //       onTap: _toggleIcon,
+    //       child: AnimatedSwitcher(
+    //         duration: const Duration(seconds: 1),
+    //         child: _showFirstIcon
+    //             ? const Icon(Icons.star, key: ValueKey<int>(1))
+    //             : const Icon(Icons.favorite, key: ValueKey<int>(2)),
+    //         transitionBuilder: (child, animation) {
+    //           return ScaleTransition(
+    //             scale: animation,
+    //             child: RotationTransition(
+    //               turns: animation,
+    //               child: child,
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
 
