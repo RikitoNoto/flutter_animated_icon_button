@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_icon_button/animate_change_icon.dart';
 import 'package:flutter_animated_icon_button/tap_fill_icon.dart';
+import 'package:flutter_animated_icon_button/tap_particle.dart';
 
 void main() {
   runApp(const IconApp());
@@ -22,10 +23,14 @@ class IconApp extends StatelessWidget {
       ),
       body: const Column(
         children: [
-          TapFillIcon(
-            borderIcon: Icons.favorite_border,
-            fillIcon: Icons.favorite,
-            initialPushed: false,
+          TapParticle(
+            size: 50,
+            child: TapFillIcon(
+              size: 50,
+              borderIcon: Icons.favorite_border,
+              fillIcon: Icons.favorite,
+              initialPushed: false,
+            ),
           ),
           AnimateChangeIcon(
             rotateBeginAngle: 0,
@@ -38,7 +43,6 @@ class IconApp extends StatelessWidget {
               size: 50,
             ),
           ),
-          IconAnimation(),
         ],
       ),
     ));

@@ -10,6 +10,7 @@ class TapFillIcon extends StatefulWidget {
     this.initialPushed = false,
     this.animationController,
     this.animationCurve = Curves.easeOutBack,
+    this.size,
     this.onTap,
     this.onPush,
     this.onPull,
@@ -25,6 +26,7 @@ class TapFillIcon extends StatefulWidget {
   final bool initialPushed;
   final AnimationController? animationController;
   final Curve animationCurve;
+  final double? size;
   final void Function()? onTap;
   final void Function()? onPush;
   final void Function()? onPull;
@@ -65,37 +67,36 @@ class TapFillIconState extends State<TapFillIcon>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: () {
-          widget.onTap?.call();
-          if (_isPushed) {
-            widget.onPull?.call();
-            _controller.value = _controller.lowerBound;
-          } else {
-            widget.onPush?.call();
-            _controller.forward();
-          }
+    return GestureDetector(
+      onTap: () {
+        widget.onTap?.call();
+        if (_isPushed) {
+          widget.onPull?.call();
+          _controller.value = _controller.lowerBound;
+        } else {
+          widget.onPush?.call();
+          _controller.forward();
+        }
 
-          _isPushed = !_isPushed;
-        },
-        child: Stack(
-          children: [
-            Icon(
-              widget.borderIcon,
-              color: widget.borderColor,
-            ),
-            Transform.scale(
-              scale: CurvedAnimation(
-                      parent: _controller, curve: widget.animationCurve)
-                  .drive(Tween(
-                      begin: _controller.lowerBound,
-                      end: _controller.upperBound))
-                  .value,
-              child: Icon(widget.fillIcon, color: widget.fillColor),
-            ),
-          ],
-        ),
+        _isPushed = !_isPushed;
+      },
+      child: Stack(
+        children: [
+          Icon(
+            widget.borderIcon,
+            size: widget.size,
+            color: widget.borderColor,
+          ),
+          Transform.scale(
+            scale: CurvedAnimation(
+                    parent: _controller, curve: widget.animationCurve)
+                .drive(Tween(
+                    begin: _controller.lowerBound, end: _controller.upperBound))
+                .value,
+            child: Icon(widget.fillIcon,
+                size: widget.size, color: widget.fillColor),
+          ),
+        ],
       ),
     );
   }
