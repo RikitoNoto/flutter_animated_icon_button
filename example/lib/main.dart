@@ -9,10 +9,32 @@ void main() {
   runApp(const IconApp());
 }
 
-class IconApp extends StatelessWidget {
-  const IconApp({
-    super.key,
-  });
+class IconApp extends StatefulWidget {
+  const IconApp({super.key});
+
+  @override
+  IconAppState createState() => IconAppState();
+}
+
+class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+      lowerBound: 0.0,
+      upperBound: 1.0,
+    );
+    _controller.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +43,19 @@ class IconApp extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Icon animations'),
       ),
-      body: const Column(
-        children: [
-          TapParticle(
+      body: Center(
+        child: TapParticle(
+          size: 50,
+          syncAnimation: _controller,
+          duration: Duration(milliseconds: 500),
+          child: TapFillIcon(
+            animationController: _controller,
             size: 50,
-            child: TapFillIcon(
-              size: 50,
-              borderIcon: Icons.favorite_border,
-              fillIcon: Icons.favorite,
-              initialPushed: false,
-            ),
+            borderIcon: Icons.favorite_border,
+            fillIcon: Icons.favorite,
+            initialPushed: false,
           ),
-          AnimateChangeIcon(
-            rotateBeginAngle: 0,
-            firstIcon: Icon(
-              Icons.play_arrow_rounded,
-              size: 50,
-            ),
-            secondIcon: Icon(
-              Icons.stop_rounded,
-              size: 50,
-            ),
-          ),
-        ],
+        ),
       ),
     ));
   }

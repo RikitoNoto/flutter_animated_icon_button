@@ -4,28 +4,58 @@ import 'package:flutter/material.dart';
 
 class TapParticle extends StatefulWidget {
   const TapParticle({
-    this.size = 300,
+    this.size = 50,
     this.child,
+    this.syncAnimation,
+    this.controller,
+    this.particleCount = 8,
+    this.duration = const Duration(milliseconds: 500),
+    this.particleLength,
     super.key,
-  });
+  }) : assert(!(syncAnimation != null && controller != null), "");
 
   final double size;
   final Widget? child;
+  final AnimationController? syncAnimation;
+  final AnimationController? controller;
+  final Duration duration;
+  final int particleCount;
+  final double? particleLength;
 
   @override
   TapParticleState createState() => TapParticleState();
 }
 
 class TapParticleState extends State<TapParticle>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _controller.repeat();
+
+    _controller = widget.controller != null
+        ? widget.controller!
+        : AnimationController(vsync: this, duration: widget.duration);
+    final syncAnimation = widget.syncAnimation;
+    if (syncAnimation != null) {
+      syncAnimation.addListener(() {
+        if (syncAnimation.status == AnimationStatus.forward) {
+          final startTrriger =
+              (syncAnimation.upperBound - syncAnimation.lowerBound) * 0.0;
+          if (syncAnimation.upperBound > syncAnimation.lowerBound &&
+              syncAnimation.value > startTrriger) {
+            _controller.forward();
+          }
+          if (syncAnimation.upperBound < syncAnimation.lowerBound &&
+              syncAnimation.value < startTrriger) {
+            _controller.forward();
+          }
+        } else if (syncAnimation.value == syncAnimation.lowerBound) {
+          _controller.value = _controller.lowerBound;
+        }
+      });
+    }
   }
 
   @override
@@ -38,15 +68,14 @@ class TapParticleState extends State<TapParticle>
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        CircleParticle(
+          animation: _controller,
+          lineCount: widget.particleCount,
+          lineLength: widget.particleLength,
+        ),
         if (widget.child != null) ...[
           widget.child!,
         ],
-        Container(
-          height: 50,
-          width: 50,
-          color: Colors.red,
-        ),
-        CircleParticle(animation: _controller),
       ],
     );
   }
@@ -57,11 +86,13 @@ class CircleParticle extends StatelessWidget {
     required this.animation,
     this.lineCount = 8,
     this.size = 50,
+    this.lineLength,
     super.key,
   });
   final Animation<double> animation;
   final int lineCount;
   final double size;
+  final double? lineLength;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +104,8 @@ class CircleParticle extends StatelessWidget {
           child: CustomPaint(
             size: Size(size, size),
             painter: LineParticlePainter(
-                animation: animation, lineLength: size * 0.6),
+                animation: animation,
+                lineLength: lineLength != null ? lineLength! : size * 0.3),
           ),
         ),
       ),
