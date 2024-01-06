@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
 
+/// A TapFillIcon is an icon button widget.
+/// When this button tapped, it change the icon from [borderIcon] to [fillIcon] with animations.
+/// If you push when this button's state is [fillIcon], change from [fillIcon] to [borderIcon] without animations.
+/// The animations exist rotaion and scale.
+///
+///
+/// {@tool snippet}
+/// This example shows how to create a favorite button that is often used in SNS apps.
+/// ```dart
+/// TapFillIcon(
+///   fillIcon: Icon(Icons.favorite, color: Colors.red),
+///   borderIcon: Icon(Icons.favorite_border, color: Colors.grey),
+///   initialPushed: false,
+/// ),
+/// ```
+/// {@end-tool}
 class TapFillIcon extends StatefulWidget {
   const TapFillIcon({
     required this.fillIcon,
     required this.borderIcon,
-    this.fillColor = Colors.black,
-    this.borderColor = Colors.grey,
     this.animateDuration = const Duration(milliseconds: 300),
     this.initialPushed = false,
     this.animationController,
     this.animationCurve = Curves.easeOutBack,
-    this.size,
     this.onTap,
     this.onPush,
     this.onPull,
     super.key,
   });
-  static const icon = Icons.favorite;
 
-  final IconData fillIcon;
-  final IconData borderIcon;
-  final Color fillColor;
-  final Color borderColor;
+  final Widget fillIcon;
+  final Widget borderIcon;
   final Duration animateDuration;
   final bool initialPushed;
   final AnimationController? animationController;
   final Curve animationCurve;
-  final double? size;
   final void Function()? onTap;
   final void Function()? onPush;
   final void Function()? onPull;
@@ -82,19 +91,14 @@ class TapFillIconState extends State<TapFillIcon>
       },
       child: Stack(
         children: [
-          Icon(
-            widget.borderIcon,
-            size: widget.size,
-            color: widget.borderColor,
-          ),
+          widget.borderIcon,
           Transform.scale(
             scale: CurvedAnimation(
                     parent: _controller, curve: widget.animationCurve)
                 .drive(Tween(
                     begin: _controller.lowerBound, end: _controller.upperBound))
                 .value,
-            child: Icon(widget.fillIcon,
-                size: widget.size, color: widget.fillColor),
+            child: widget.fillIcon,
           ),
         ],
       ),
