@@ -11,6 +11,7 @@ class TapParticle extends StatefulWidget {
     this.particleCount = 8,
     this.duration = const Duration(milliseconds: 500),
     this.particleLength,
+    this.color = Colors.yellow,
     super.key,
   }) : assert(!(syncAnimation != null && controller != null), "");
 
@@ -21,6 +22,7 @@ class TapParticle extends StatefulWidget {
   final Duration duration;
   final int particleCount;
   final double? particleLength;
+  final Color color;
 
   @override
   TapParticleState createState() => TapParticleState();
@@ -72,6 +74,7 @@ class TapParticleState extends State<TapParticle>
           animation: _controller,
           lineCount: widget.particleCount,
           lineLength: widget.particleLength,
+          color: widget.color,
         ),
         if (widget.child != null) ...[
           widget.child!,
@@ -84,6 +87,7 @@ class TapParticleState extends State<TapParticle>
 class CircleParticle extends StatelessWidget {
   const CircleParticle({
     required this.animation,
+    required this.color,
     this.lineCount = 8,
     this.size = 50,
     this.lineLength,
@@ -93,6 +97,7 @@ class CircleParticle extends StatelessWidget {
   final int lineCount;
   final double size;
   final double? lineLength;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +110,7 @@ class CircleParticle extends StatelessWidget {
             size: Size(size, size),
             painter: LineParticlePainter(
                 animation: animation,
+                color: color,
                 lineLength: lineLength != null ? lineLength! : size * 0.3),
           ),
         ),
@@ -117,14 +123,16 @@ class LineParticlePainter extends CustomPainter {
   LineParticlePainter({
     required this.animation,
     required this.lineLength,
+    required this.color,
   }) : super(repaint: animation);
   final Animation<double> animation;
   final double lineLength;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Colors.yellow
+      ..color = color
       ..strokeWidth = 5;
 
     // double startY = size.height * (1 - animation.value);
