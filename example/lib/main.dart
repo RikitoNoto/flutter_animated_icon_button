@@ -43,19 +43,29 @@ class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: const Text('Icon animations'),
       ),
-      body: Center(
-        child: TapParticle(
-          size: 50,
-          syncAnimation: _controller,
-          duration: Duration(milliseconds: 500),
-          child: TapFillIcon(
-            animationController: _controller,
-            size: 50,
-            borderIcon: Icons.favorite_border,
-            fillIcon: Icons.favorite,
-            initialPushed: false,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: TapParticle(
+              size: 50,
+              syncAnimation: _controller,
+              duration: Duration(milliseconds: 500),
+              child: TapFillIcon(
+                animationController: _controller,
+                size: 50,
+                borderIcon: Icons.favorite_border,
+                fillIcon: Icons.favorite,
+                initialPushed: false,
+              ),
+            ),
           ),
-        ),
+          AnimateChangeIcon(
+            animateDuration: Duration(milliseconds: 300),
+            firstIcon: Icon(Icons.play_arrow),
+            secondIcon: Icon(Icons.stop),
+          ),
+        ],
       ),
     ));
   }
