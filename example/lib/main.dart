@@ -47,18 +47,20 @@ class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
           Center(
             child: TapParticle(
               size: 50,
+              particleCount: 5,
+              color: Colors.red,
               syncAnimation: _controller,
               duration: const Duration(milliseconds: 500),
               child: TapFillIcon(
                 animationController: _controller,
                 borderIcon: const Icon(
-                  Icons.favorite_border,
+                  Icons.star_border,
                   color: Colors.grey,
                   size: 50,
                 ),
                 fillIcon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+                  Icons.star,
+                  color: Colors.yellow,
                   size: 50,
                 ),
                 initialPushed: false,

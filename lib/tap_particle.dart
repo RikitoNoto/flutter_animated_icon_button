@@ -135,9 +135,8 @@ class LineParticlePainter extends CustomPainter {
       ..color = color
       ..strokeWidth = 5;
 
-    // double startY = size.height * (1 - animation.value);
-    double startY = size.height * animation.value + size.height / 2;
-    double endY = startY + lineLength * lengthAnimation(animation.value);
+    double startY = size.height / 2 - size.height * animation.value;
+    double endY = startY - lineLength * _lengthAnimation(animation.value);
 
     Offset start = Offset(size.width / 2, startY);
     Offset end = Offset(size.width / 2, endY);
@@ -145,7 +144,13 @@ class LineParticlePainter extends CustomPainter {
     canvas.drawLine(start, end, paint);
   }
 
-  double lengthAnimation(double animation) {
+  /// This function convert from the value between 0.0 and 1.0 to the cubic function that return the value below.
+  /// | animation | return value |
+  /// | -- | -- |
+  /// | 0.0 | 0.0 |
+  /// | 0.5 | 1.0 |
+  /// |1.0 | 0.0 |
+  double _lengthAnimation(double animation) {
     var value = -15.8730158730158 * pow(animation, 3) +
         22.222222222222 * pow(animation, 2) +
         -6.34920634920 * animation;
