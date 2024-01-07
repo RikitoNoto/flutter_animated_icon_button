@@ -37,43 +37,53 @@ class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Icon animations'),
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: TapParticle(
-              size: 50,
-              particleCount: 5,
-              color: Colors.red,
-              syncAnimation: _controller,
-              duration: const Duration(milliseconds: 500),
-              child: TapFillIcon(
-                animationController: _controller,
-                borderIcon: const Icon(
-                  Icons.star_border,
-                  color: Colors.grey,
-                  size: 50,
-                ),
-                fillIcon: const Icon(
-                  Icons.star,
-                  color: Colors.yellow,
-                  size: 50,
-                ),
-                initialPushed: false,
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Icon animations'),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Tap this icons'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TapParticle(
+                    size: 50,
+                    particleCount: 5,
+                    color: Colors.red,
+                    syncAnimation: _controller,
+                    duration: const Duration(milliseconds: 500),
+                    child: TapFillIcon(
+                      animationController: _controller,
+                      borderIcon: const Icon(
+                        Icons.star_border,
+                        color: Colors.grey,
+                        size: 50,
+                      ),
+                      fillIcon: const Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 50,
+                      ),
+                      initialPushed: false,
+                    ),
+                  ),
+                  AnimateChangeIcon(
+                    animateDuration: Duration(milliseconds: 300),
+                    firstIcon: Icon(
+                      Icons.play_arrow_rounded,
+                      size: 50,
+                    ),
+                    secondIcon: Icon(
+                      Icons.stop_rounded,
+                      size: 50,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-          AnimateChangeIcon(
-            animateDuration: Duration(milliseconds: 300),
-            firstIcon: Icon(Icons.play_arrow),
-            secondIcon: Icon(Icons.stop),
-          ),
-        ],
-      ),
-    ));
+            ],
+          )),
+    );
   }
 }

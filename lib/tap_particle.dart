@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class TapParticle extends StatefulWidget {
@@ -15,13 +14,33 @@ class TapParticle extends StatefulWidget {
     super.key,
   }) : assert(!(syncAnimation != null && controller != null), "");
 
+  /// The size of [child] in this object.
+  /// It display empty space of the size.
   final double size;
+
+  /// The widget in the center of a particle.
   final Widget? child;
+
+  /// The Animation for synchronizing the particle animation.
+  /// The particle animation is starting when [syncAnimation] called forward method.
+  /// If [syncAnimation] called reverse method, the particle animation reset animation.
   final AnimationController? syncAnimation;
+
+  /// The animation controller for controlling the particle animation.
   final AnimationController? controller;
+
+  /// The animation's duration.
   final Duration duration;
+
+  /// The number of particle lines.
+  /// The particles display in a circle.
   final int particleCount;
+
+  /// The maximum length of a particle.
+  /// Particles are to this length when the animation value is just half.
   final double? particleLength;
+
+  /// The color of particles.
   final Color color;
 
   @override
