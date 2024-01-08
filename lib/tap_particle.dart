@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class TapParticle extends StatefulWidget {
@@ -15,13 +14,33 @@ class TapParticle extends StatefulWidget {
     super.key,
   }) : assert(!(syncAnimation != null && controller != null), "");
 
+  /// The size of [child] in this object.
+  /// It display empty space of the size.
   final double size;
+
+  /// The widget in the center of a particle.
   final Widget? child;
+
+  /// The Animation for synchronizing the particle animation.
+  /// The particle animation is starting when [syncAnimation] called forward method.
+  /// If [syncAnimation] called reverse method, the particle animation reset animation.
   final AnimationController? syncAnimation;
+
+  /// The animation controller for controlling the particle animation.
   final AnimationController? controller;
+
+  /// The animation's duration.
   final Duration duration;
+
+  /// The number of particle lines.
+  /// The particles display in a circle.
   final int particleCount;
+
+  /// The maximum length of a particle.
+  /// Particles are to this length when the animation value is just half.
   final double? particleLength;
+
+  /// The color of particles.
   final Color color;
 
   @override
@@ -135,9 +154,8 @@ class LineParticlePainter extends CustomPainter {
       ..color = color
       ..strokeWidth = 5;
 
-    // double startY = size.height * (1 - animation.value);
-    double startY = size.height * animation.value + size.height / 2;
-    double endY = startY + lineLength * lengthAnimation(animation.value);
+    double startY = size.height / 2 - size.height * animation.value;
+    double endY = startY - lineLength * _lengthAnimation(animation.value);
 
     Offset start = Offset(size.width / 2, startY);
     Offset end = Offset(size.width / 2, endY);
@@ -145,7 +163,13 @@ class LineParticlePainter extends CustomPainter {
     canvas.drawLine(start, end, paint);
   }
 
-  double lengthAnimation(double animation) {
+  /// This function convert from the value between 0.0 and 1.0 to the cubic function that return the value below.
+  /// | animation | return value |
+  /// | -- | -- |
+  /// | 0.0 | 0.0 |
+  /// | 0.5 | 1.0 |
+  /// |1.0 | 0.0 |
+  double _lengthAnimation(double animation) {
     var value = -15.8730158730158 * pow(animation, 3) +
         22.222222222222 * pow(animation, 2) +
         -6.34920634920 * animation;
