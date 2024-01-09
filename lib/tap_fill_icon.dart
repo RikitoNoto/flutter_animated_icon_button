@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 /// A TapFillIcon is an icon button widget.
 /// When this button tapped, it change the icon from [borderIcon] to [fillIcon] with animations.
 /// If you push when this button's state is [fillIcon], change from [fillIcon] to [borderIcon] without animations.
-/// The animations exist rotaion and scale.
 ///
 ///
 /// {@tool snippet}
