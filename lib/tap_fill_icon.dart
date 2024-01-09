@@ -30,14 +30,31 @@ class TapFillIcon extends StatefulWidget {
     super.key,
   });
 
+  /// An icon after pushed this button.
   final Widget fillIcon;
+
+  /// An icon before pushed this button.
   final Widget borderIcon;
+
+  /// The duration of the animation from tap to filled icon.
   final Duration animateDuration;
+
+  /// The initial state of this button.
   final bool initialPushed;
+
+  /// An animation controller of this button.
   final AnimationController? animationController;
+
+  /// The animation curve when fill an icon.
   final Curve animationCurve;
+
+  /// A callback when tap this button.
   final void Function()? onTap;
+
+  /// A callback when tap this button from the state of [borderIcon].
   final void Function()? onPush;
+
+  /// A callback when tap this button from the state of [fillIcon].
   final void Function()? onPull;
 
   @override
