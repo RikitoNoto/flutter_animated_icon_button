@@ -1,6 +1,42 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+/// A [TapParticle] display particles when push button.
+/// If [syncAnimation] is set, display particles according to it.
+///
+///
+/// {@tool snippet}
+/// This example shows how to create the button that be able to display particle.
+/// ```dart
+///final controller = AnimationController(
+/// vsync: this,
+/// duration: Duration(milliseconds: 300),
+/// lowerBound: 0.0,
+/// upperBound: 1.0,
+///);
+///TapParticle(
+/// size: 50,
+/// particleCount: 5,
+/// color: Colors.red,
+/// syncAnimation: controller,
+/// duration: const Duration(milliseconds: 500),
+/// child: TapFillIcon(
+///   animationController: controller,
+///   borderIcon: const Icon(
+///     Icons.star_border,
+///     color: Colors.grey,
+///     size: 50,
+///   ),
+///   fillIcon: const Icon(
+///     Icons.star,
+///     color: Colors.yellow,
+///     size: 50,
+///   ),
+///   initialPushed: false,
+///   ),
+///),
+/// ```
+/// {@end-tool}
 class TapParticle extends StatefulWidget {
   const TapParticle({
     this.size = 50,
