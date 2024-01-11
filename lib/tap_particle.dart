@@ -186,15 +186,15 @@ class LineParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
+    final paint = Paint()
       ..color = color
       ..strokeWidth = 5;
 
-    double startY = size.height / 2 - size.height * animation.value;
-    double endY = startY - lineLength * _lengthAnimation(animation.value);
+    final startY = size.height / 2 - size.height * animation.value;
+    final endY = startY - lineLength * _lengthAnimation(animation.value);
 
-    Offset start = Offset(size.width / 2, startY);
-    Offset end = Offset(size.width / 2, endY);
+    final start = Offset(size.width / 2, startY);
+    final end = Offset(size.width / 2, endY);
 
     canvas.drawLine(start, end, paint);
   }
