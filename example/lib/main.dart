@@ -4,33 +4,46 @@ import 'package:flutter_animated_icon_button/tap_fill_icon.dart';
 import 'package:flutter_animated_icon_button/tap_particle.dart';
 
 void main() {
-  runApp(const IconApp());
+  runApp(const IconSampleApp());
 }
 
-class IconApp extends StatefulWidget {
-  const IconApp({super.key});
+class IconSampleApp extends StatefulWidget {
+  const IconSampleApp({super.key});
 
   @override
-  IconAppState createState() => IconAppState();
+  IconSampleAppState createState() => IconSampleAppState();
 }
 
-class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class IconSampleAppState extends State<IconSampleApp>
+    with TickerProviderStateMixin {
+  late AnimationController _favoriteController;
+  late AnimationController _starController;
 
   @override
   void initState() {
-    _controller = AnimationController(
+    _favoriteController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       lowerBound: 0.0,
       upperBound: 1.0,
     );
-    _controller.addListener(() {
+    _favoriteController.addListener(() {
       if (mounted) {
         setState(() {});
       }
     });
 
+    _starController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      lowerBound: 0.0,
+      upperBound: 1.0,
+    );
+    _starController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -38,52 +51,82 @@ class IconAppState extends State<IconApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Icon animations'),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+        appBar: AppBar(
+          title: const Text('Icon animations'),
+        ),
+        body: Center(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Tap this icons'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TapParticle(
+              Text(
+                'Tap fill favorite button',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              TapFillIcon(
+                animationController: _favoriteController,
+                borderIcon: const Icon(
+                  Icons.favorite_border,
+                  color: Colors.grey,
+                  size: 50,
+                ),
+                fillIcon: const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                  size: 50,
+                ),
+                initialPushed: false,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Text(
+                'Tap fill start button with particle',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              TapParticle(
+                size: 50,
+                particleCount: 5,
+                particleLength: 10,
+                color: Colors.yellow,
+                syncAnimation: _starController,
+                duration: const Duration(milliseconds: 300),
+                child: TapFillIcon(
+                  animationController: _starController,
+                  borderIcon: const Icon(
+                    Icons.star_border,
+                    color: Colors.grey,
                     size: 50,
-                    particleCount: 5,
-                    color: Colors.red,
-                    syncAnimation: _controller,
-                    duration: const Duration(milliseconds: 500),
-                    child: TapFillIcon(
-                      animationController: _controller,
-                      borderIcon: const Icon(
-                        Icons.star_border,
-                        color: Colors.grey,
-                        size: 50,
-                      ),
-                      fillIcon: const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 50,
-                      ),
-                      initialPushed: false,
-                    ),
                   ),
-                  AnimateChangeIcon(
-                    animateDuration: Duration(milliseconds: 300),
-                    firstIcon: Icon(
-                      Icons.play_arrow_rounded,
-                      size: 50,
-                    ),
-                    secondIcon: Icon(
-                      Icons.stop_rounded,
-                      size: 50,
-                    ),
+                  fillIcon: const Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: 50,
                   ),
-                ],
+                  initialPushed: false,
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Text(
+                'Tap change with animation button',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const AnimateChangeIcon(
+                animateDuration: Duration(milliseconds: 300),
+                firstIcon: Icon(
+                  Icons.play_arrow_rounded,
+                  size: 50,
+                ),
+                secondIcon: Icon(
+                  Icons.stop_rounded,
+                  size: 50,
+                ),
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
