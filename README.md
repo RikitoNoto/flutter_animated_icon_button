@@ -1,7 +1,7 @@
 # flutter_animated_icon_button
 An animated icon plugin.
 This plugin allows you to create an animated icon button easily.
-
+<img width="100%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_push.gif">
 
 
 ## Getting Started
@@ -27,7 +27,7 @@ TapFillIcon(
 ```
 
 This code builds the below icon button.
-
+<img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_favorite.gif">
 
 
 ## TapFillIconWithParticle
@@ -57,7 +57,7 @@ The code below shows how to create the Favorite icon button with particles.
       size: 50,
       particleCount: 5,
       particleLength: 10,
-      color: Colors.yellow,
+      color: Colors.orange,
       syncAnimation: controller,
       duration: const Duration(milliseconds: 300),
       child: TapFillIcon(
@@ -78,6 +78,7 @@ The code below shows how to create the Favorite icon button with particles.
 ```
 
 This code builds the below icon button.
+<img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_star.gif">
 
 
 ## AnimateChangeIcon
@@ -94,3 +95,4 @@ AnimateChangeIcon(
 ```
 
 This code builds the below icon button.
+<img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_play_stop.gif">
