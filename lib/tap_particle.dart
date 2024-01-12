@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 ///
 ///
 /// {@tool snippet}
-/// This example shows how to create the button that be able to display particle.
+/// This example shows how to create the button that can display particle.
 /// ```dart
 ///final controller = AnimationController(
 /// vsync: this,
@@ -48,7 +48,7 @@ class TapParticle extends StatefulWidget {
     this.particleLength,
     this.color = Colors.yellow,
     super.key,
-  }) : assert(!(syncAnimation != null && controller != null), "");
+  }) : assert(!(syncAnimation != null && controller != null), '');
 
   /// The size of [child] in this object.
   /// It display empty space of the size.
@@ -58,8 +58,10 @@ class TapParticle extends StatefulWidget {
   final Widget? child;
 
   /// The Animation for synchronizing the particle animation.
-  /// The particle animation is starting when [syncAnimation] called forward method.
-  /// If [syncAnimation] called reverse method, the particle animation reset animation.
+  /// The particle animation is starting
+  /// when [syncAnimation] called forward method.
+  /// If [syncAnimation] called reverse method,
+  /// the particle animation reset animation.
   final AnimationController? syncAnimation;
 
   /// The animation controller for controlling the particle animation.
@@ -201,7 +203,8 @@ class LineParticlePainter extends CustomPainter {
     canvas.drawLine(start, end, paint);
   }
 
-  /// This function convert from the value between 0.0 and 1.0 to the cubic function that return the value below.
+  /// This function convert from the value between 0.0 and 1.0
+  /// to the cubic function that return the value below.
   /// | animation | return value |
   /// | -- | -- |
   /// | 0.0 | 0.0 |
