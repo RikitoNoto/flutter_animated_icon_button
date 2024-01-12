@@ -27,6 +27,7 @@ TapFillIcon(
 ```
 
 This code builds the below icon button.
+
 <img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_favorite.gif">
 
 
@@ -78,6 +79,7 @@ The code below shows how to create the Favorite icon button with particles.
 ```
 
 This code builds the below icon button.
+
 <img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_star.gif">
 
 
@@ -95,4 +97,5 @@ AnimateChangeIcon(
 ```
 
 This code builds the below icon button.
+
 <img width="50%" src="https://raw.githubusercontent.com/RikitoNoto/flutter_animated_icon_button/master/docs/assets/animate_icon_play_stop.gif">
