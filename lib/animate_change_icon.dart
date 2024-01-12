@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 /// A [AnimateChangeIcon] is an icon button widget.
-/// When this button tapped, it change the icon from [firstIcon] to [secondIcon] with animations.
+/// When this button tapped, it change the icon
+/// from [firstIcon] to [secondIcon] with animations.
 /// The animations exist rotaion and scale.
 ///
 ///
 /// {@tool snippet}
-/// This example shows how to create the button being able to change icons from a play button to a stop button.
+/// This example shows how to create the button being able to change icons
+/// from a play button to a stop button.
 /// ```dart
 /// AnimateChangeIcon(
 ///   firstIcon: Icon(
@@ -38,11 +40,13 @@ class AnimateChangeIcon extends StatefulWidget {
   });
 
   /// An icon for show first and after [AnimateChangeIcon] was pushed odd time.
-  /// If [initialPushed] is true, this icon display after [AnimateChangeIcon] was pushed even time.
+  /// If [initialPushed] is true,
+  /// this icon display after [AnimateChangeIcon] was pushed even time.
   final Icon firstIcon;
 
   /// An icon display after [AnimateChangeIcon] was pushed odd time.
-  /// If [initialPushed] is true, this icon display after [AnimateChangeIcon] was pushed odd time or first.
+  /// If [initialPushed] is true,
+  /// this icon display after [AnimateChangeIcon] was pushed odd time or first.
   final Icon secondIcon;
 
   /// An animation's duration.
@@ -89,8 +93,6 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
       _controller = AnimationController(
         vsync: this,
         duration: widget.animateDuration,
-        lowerBound: 0.0,
-        upperBound: 1.0,
       );
     }
     _controller.addListener(() {
@@ -123,38 +125,54 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
         children: [
           Transform.scale(
             scale: CurvedAnimation(
-                    parent: _controller, curve: widget.scaleAnimationCurve)
-                .drive(Tween(
-                  begin: _controller.lowerBound,
-                  end: _controller.upperBound,
-                ))
+              parent: _controller,
+              curve: widget.scaleAnimationCurve,
+            )
+                .drive(
+                  Tween(
+                    begin: _controller.lowerBound,
+                    end: _controller.upperBound,
+                  ),
+                )
                 .value,
             child: Transform.rotate(
               angle: CurvedAnimation(
-                      parent: _controller, curve: widget.rotateAnimationCurve)
-                  .drive(Tween(
-                    begin: _controller.upperBound * widget.rotateBeginAngle,
-                    end: widget.rotateEndAngle,
-                  ))
+                parent: _controller,
+                curve: widget.rotateAnimationCurve,
+              )
+                  .drive(
+                    Tween(
+                      begin: _controller.upperBound * widget.rotateBeginAngle,
+                      end: widget.rotateEndAngle,
+                    ),
+                  )
                   .value,
               child: widget.firstIcon,
             ),
           ),
           Transform.scale(
             scale: CurvedAnimation(
-                    parent: _controller, curve: widget.scaleAnimationCurve)
-                .drive(Tween(
-                  begin: _controller.upperBound,
-                  end: _controller.lowerBound,
-                ))
+              parent: _controller,
+              curve: widget.scaleAnimationCurve,
+            )
+                .drive(
+                  Tween(
+                    begin: _controller.upperBound,
+                    end: _controller.lowerBound,
+                  ),
+                )
                 .value,
             child: Transform.rotate(
               angle: CurvedAnimation(
-                      parent: _controller, curve: widget.rotateAnimationCurve)
-                  .drive(Tween(
-                    begin: widget.rotateEndAngle,
-                    end: _controller.upperBound * widget.rotateBeginAngle,
-                  ))
+                parent: _controller,
+                curve: widget.rotateAnimationCurve,
+              )
+                  .drive(
+                    Tween(
+                      begin: widget.rotateEndAngle,
+                      end: _controller.upperBound * widget.rotateBeginAngle,
+                    ),
+                  )
                   .value,
               child: widget.secondIcon,
             ),

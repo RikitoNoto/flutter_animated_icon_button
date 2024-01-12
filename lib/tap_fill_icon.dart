@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 /// A TapFillIcon is an icon button widget.
-/// When this button tapped, it change the icon from [borderIcon] to [fillIcon] with animations.
-/// If you push when this button's state is [fillIcon], change from [fillIcon] to [borderIcon] without animations.
+/// When this button tapped,
+/// it change the icon from [borderIcon] to [fillIcon] with animations.
+/// If you push when this button's state is [fillIcon],
+/// change from [fillIcon] to [borderIcon] without animations.
 ///
 ///
 /// {@tool snippet}
-/// This example shows how to create a favorite button that is often used in SNS apps.
+/// This example shows how to create
+/// a favorite button that is often used in SNS apps.
 /// ```dart
 /// TapFillIcon(
 ///   fillIcon: Icon(Icons.favorite, color: Colors.red),
@@ -73,8 +76,6 @@ class TapFillIconState extends State<TapFillIcon>
       _controller = AnimationController(
         vsync: this,
         duration: widget.animateDuration,
-        lowerBound: 0.0,
-        upperBound: 1.0,
       );
     }
     _controller.addListener(() {
@@ -110,9 +111,15 @@ class TapFillIconState extends State<TapFillIcon>
           widget.borderIcon,
           Transform.scale(
             scale: CurvedAnimation(
-                    parent: _controller, curve: widget.animationCurve)
-                .drive(Tween(
-                    begin: _controller.lowerBound, end: _controller.upperBound))
+              parent: _controller,
+              curve: widget.animationCurve,
+            )
+                .drive(
+                  Tween(
+                    begin: _controller.lowerBound,
+                    end: _controller.upperBound,
+                  ),
+                )
                 .value,
             child: widget.fillIcon,
           ),
