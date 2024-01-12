@@ -1,6 +1,6 @@
 # flutter_animated_icon_button
 An animated icon plugin.
-This plugin allow you create an animated icon button easy.
+This plugin allows you to create an animated icon button easily.
 
 
 
@@ -12,7 +12,7 @@ flutter_animated_icon_button: ^1.0.0
 
 ## Example
 ## TapFillIcon
-The code below shows how to create the Good icon button that often use in sns apps.
+The code below shows how to create the Good icon button that is often used in SNS apps.
 ```dart
 TapFillIcon(
     borderIcon: const Icon(
@@ -26,7 +26,7 @@ TapFillIcon(
 ),
 ```
 
-This code build the below icon button.
+This code builds the below icon button.
 
 
 
@@ -77,7 +77,7 @@ The code below shows how to create the Favorite icon button with particles.
   }
 ```
 
-This code build the below icon button.
+This code builds the below icon button.
 
 
 ## AnimateChangeIcon
@@ -93,4 +93,4 @@ AnimateChangeIcon(
 ),
 ```
 
-This code build the below icon button.
+This code builds the below icon button.
