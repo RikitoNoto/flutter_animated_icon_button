@@ -126,6 +126,7 @@ class TapParticleState extends State<TapParticle>
     return Stack(
       children: [
         CircleParticle(
+          size: widget.size,
           animation: _controller,
           lineCount: widget.particleCount,
           lineLength: widget.particleLength,
@@ -164,9 +165,10 @@ class CircleParticle extends StatelessWidget {
           child: CustomPaint(
             size: Size(size, size),
             painter: LineParticlePainter(
-                animation: animation,
-                color: color,
-                lineLength: lineLength != null ? lineLength! : size * 0.3),
+              animation: animation,
+              color: color,
+              lineLength: lineLength != null ? lineLength! : size * 0.3,
+            ),
           ),
         ),
       ),
