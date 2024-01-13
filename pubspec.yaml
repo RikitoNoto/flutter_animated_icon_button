@@ -22,3 +22,11 @@ flutter:
     platforms:
       some_platform:
         pluginClass: somePluginClass
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
