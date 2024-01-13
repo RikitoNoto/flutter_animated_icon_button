@@ -1,7 +1,10 @@
 name: flutter_animated_icon_button
-description: An animated icon button for Flutter apps.
-version: 1.0.0
-homepage: https://github.com/RikitoNoto
+description:
+  An animated icon button for Flutter apps.
+  This package allows you to create animated icons and a particle easily.
+
+version: 1.1.0
+homepage: https://github.com/RikitoNoto/flutter_animated_icon_button/tree/develop/lib
 repository: https://github.com/RikitoNoto/flutter_animated_icon_button
 
 environment:
@@ -22,3 +25,11 @@ flutter:
     platforms:
       some_platform:
         pluginClass: somePluginClass
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
