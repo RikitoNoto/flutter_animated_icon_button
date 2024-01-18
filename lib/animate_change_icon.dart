@@ -147,7 +147,7 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
                     ),
                   )
                   .value,
-              child: widget.firstIcon,
+              child: widget.secondIcon,
             ),
           ),
           Transform.scale(
@@ -174,7 +174,7 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
                     ),
                   )
                   .value,
-              child: widget.secondIcon,
+              child: widget.firstIcon,
             ),
           ),
         ],
