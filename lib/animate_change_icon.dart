@@ -83,7 +83,6 @@ class AnimateChangeIcon extends StatefulWidget {
 class AnimateChangeIconState extends State<AnimateChangeIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  bool _isPushed = false;
 
   @override
   void initState() {
@@ -102,7 +101,6 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
     });
 
     if (widget.initialPushed) {
-      _isPushed = true;
       _controller.value = _controller.upperBound;
     }
     super.initState();
@@ -113,13 +111,14 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
     return GestureDetector(
       onTap: () {
         widget.onTap?.call();
-        if (_isPushed) {
+        // if the animation value is 1.0 or forwarding,
+        // animate reverse.
+        if (_controller.value == _controller.upperBound ||
+            _controller.status == AnimationStatus.forward) {
           _controller.reverse();
         } else {
           _controller.forward();
         }
-
-        _isPushed = !_isPushed;
       },
       child: Stack(
         children: [
