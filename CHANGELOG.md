@@ -8,3 +8,6 @@
 
 ## 1.1.1
 * fix the bug what AnimateChangeIcon inversioned
+
+## 1.1.2
+* fix the bug what AnimateChangeIcon don't change the icon when use the AnimationCotroller used another button.
