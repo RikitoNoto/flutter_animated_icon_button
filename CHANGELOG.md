@@ -11,3 +11,6 @@
 
 ## 1.1.2
 * fix the bug what AnimateChangeIcon don't change the icon when use the AnimationCotroller used another button.
+
+## 1.1.3
+* Change AnimateChageIcon's behavior what is injected a controller to don't control animations.

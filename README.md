@@ -7,7 +7,7 @@ This plugin allows you to create an animated icon button easily.
 ## Getting Started
 To use this plugin, add ```flutter_animated_icon_button``` to a dependency in your ```pubspec.yaml```.
 ```yaml
-flutter_animated_icon_button: ^1.1.1
+flutter_animated_icon_button: ^1.1.3
 ```
 
 ## Example
