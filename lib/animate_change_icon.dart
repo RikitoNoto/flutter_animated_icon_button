@@ -57,6 +57,7 @@ class AnimateChangeIcon extends StatefulWidget {
 
   /// The controller for the animation of this button.
   /// This controller control the animation of scale and rotate.
+  /// If controller is injected, this widget don't control an animation trigger.
   final AnimationController? animationController;
 
   /// The animation of this button for scale.
@@ -83,12 +84,15 @@ class AnimateChangeIcon extends StatefulWidget {
 class AnimateChangeIconState extends State<AnimateChangeIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  late final bool _isControllerInjection;
 
   @override
   void initState() {
     if (widget.animationController != null) {
       _controller = widget.animationController!;
+      _isControllerInjection = true;
     } else {
+      _isControllerInjection = false;
       _controller = AnimationController(
         vsync: this,
         duration: widget.animateDuration,
@@ -100,7 +104,7 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
       }
     });
 
-    if (widget.initialPushed) {
+    if (widget.initialPushed && !_isControllerInjection) {
       _controller.value = _controller.upperBound;
     }
     super.initState();
@@ -111,13 +115,15 @@ class AnimateChangeIconState extends State<AnimateChangeIcon>
     return GestureDetector(
       onTap: () {
         widget.onTap?.call();
-        // if the animation value is 1.0 or forwarding,
-        // animate reverse.
-        if (_controller.value == _controller.upperBound ||
-            _controller.status == AnimationStatus.forward) {
-          _controller.reverse();
-        } else {
-          _controller.forward();
+        if (!_isControllerInjection) {
+          // if the animation value is 1.0 or forwarding,
+          // animate reverse.
+          if (_controller.value == _controller.upperBound ||
+              _controller.status == AnimationStatus.forward) {
+            _controller.reverse();
+          } else {
+            _controller.forward();
+          }
         }
       },
       child: Stack(
